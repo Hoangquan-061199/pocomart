@@ -5,6 +5,11 @@ const handlebars = require("express-handlebars");
 const app = express();
 const port = 3000;
 
+const route = require("./routes");
+
+app.use(express.urlencoded());
+app.use(express.json());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 //HTTP logger
@@ -20,13 +25,8 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
-app.get("/home", (req, res) => {
-  res.render("home");
-});
-
-app.get("/search", (req, res) => {
-  res.render("search");
-});
+// Route init
+route(app);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
